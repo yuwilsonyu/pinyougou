@@ -10,16 +10,14 @@
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
     <!-- 配置加载属性文件 -->
-    <context:property-placeholder
-            location="classpath:props/db.properties"/>
-
-    <!-- 导入数据访问配置文件 -->
+    <context:property-placeholder location="classpath:props/*.properties"/>
+    <!-- 导入数据访问的Spring配置文件 -->
     <import resource="classpath:applicationContext-mapper.xml"/>
 
-    <!-- ############## 配置dubbo服务提供者 ############## -->
-    <!-- 配置当前应用的名称 -->
+    <!-- ###### 配置Dubbo服务提供者 ##### -->
+    <!-- 配置当前应用名称 -->
     <dubbo:application name="pinyougou-sellergoods-service"/>
-    <!-- 配置zookeeper作为注册中心，注册服务地址 -->
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
     <dubbo:registry protocol="zookeeper" address="192.168.12.131:2181"/>
     <!-- 用dubbo协议在20880端口暴露服务 -->
     <dubbo:protocol name="dubbo" port="20880"/>
