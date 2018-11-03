@@ -100,7 +100,7 @@
 				<table class="table table-bordered table-striped"  width="800px">
 			      	<tr>
 			      		<td>规格名称</td>
-			      		<td><input  class="form-control" placeholder="规格名称" >  </td>
+			      		<td><input  class="form-control" placeholder="规格名称" ng-model="entity.specName">  </td>
 			      	</tr>
 				 </table>				
 				 
@@ -127,14 +127,14 @@
 					            	<input  class="form-control" placeholder="排序" ng-model="so.orders">
 					            </td>
 								<td>
-									<button type="button" class="btn btn-default" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>
+									<button type="button" class="btn btn-default" title="删除" ng-click="deleteTableRow($index);"><i class="fa fa-trash-o"></i> 删除</button>
 								</td>
 	                      </tr>
 	                    </tbody>
 				  </table> 
 			</div>
 			<div class="modal-footer">						
-				<button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+				<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="saveOrUpdate();">保存</button>
 				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
 			</div>
 		  </div>
