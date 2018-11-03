@@ -56,7 +56,7 @@ public class BrandController {
         }
         return brandService.findByPage(brand,page,rows);
     }
-    
+
     @GetMapping("/delete")
     public boolean delete(Long[] ids){
         try {
