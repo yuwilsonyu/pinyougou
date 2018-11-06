@@ -1,6 +1,10 @@
 package com.pinyougou.sellergoods.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.ISelect;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.mapper.SellerMapper;
 import com.pinyougou.pojo.Seller;
 import com.pinyougou.service.SellerService;
@@ -71,7 +75,7 @@ public class SellerServiceImpl implements SellerService {
      */
     @Override
     public Seller findOne(Serializable id) {
-        return null;
+        return sellerMapper.selectByPrimaryKey(id);
     }
 
     /**
@@ -90,7 +94,30 @@ public class SellerServiceImpl implements SellerService {
      * @param rows
      */
     @Override
-    public List<Seller> findByPage(Seller seller, int page, int rows) {
-        return null;
+    public PageResult findByPage(Seller seller, int page, int rows) {
+        try {
+            PageInfo<Object> pageInfo = PageHelper.startPage(page, rows).doSelectPageInfo(new ISelect() {
+                @Override
+                public void doSelect() {
+                    sellerMapper.findAll(seller);
+                }
+            });
+            return new PageResult(pageInfo.getTotal(),pageInfo.getList());
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+
+    }
+
+    @Override
+    public void updateStatus(String sellerId, String status) {
+        try {
+            Seller seller = new Seller();
+            seller.setSellerId(sellerId);
+            seller.setStatus(status);
+            sellerMapper.updateByPrimaryKeySelective(seller);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

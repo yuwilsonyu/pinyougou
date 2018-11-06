@@ -17,7 +17,8 @@ public class Seller implements Serializable{
    
 	private static final long serialVersionUID = -6636378626574886353L;
 	/** 登录名 */
-	@Id @Column(name="seller_id")
+	@Id
+    @Column(name="seller_id")
 	private String sellerId;
 	/** 公司名称 */
 	@Column(name="name")
