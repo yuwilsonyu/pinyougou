@@ -28,4 +28,19 @@ app.controller('baseController',function($scope){
             $scope.ids.splice(idx, 1);
         }
     };
+    $scope.jsonArr2Str = function(jsonArrStr, key){
+        // 把jsonArrStr转化成JSON数组对象
+        var jsonArr = JSON.parse(jsonArrStr);
+        // 定义新数组
+        var resArr = [];
+        // 迭代json数组
+        for (var i = 0; i < jsonArr.length; i++){
+            // 取数组中的一个元素
+            var json = jsonArr[i];
+            // 把json对象的值添加到新数组
+            resArr.push(json[key]);
+        }
+        // 返回数组中的元素用逗号分隔的字符串
+        return resArr.join(",");
+    };
 });

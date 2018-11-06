@@ -14,6 +14,7 @@
     <name>pinyougou-web</name>
     <modules>
         <module>pinyougou-manager-web</module>
+        <module>pinyougou-shop-web</module>
     </modules>
 
     <properties>
@@ -74,6 +75,8 @@
             <groupId>com.github.sgroschupf</groupId>
             <artifactId>zkclient</artifactId>
         </dependency>
+
+
 
     </dependencies>
 
