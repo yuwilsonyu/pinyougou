@@ -4,6 +4,8 @@ import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.pojo.TypeTemplate;
 import java.util.List;
 import java.io.Serializable;
+import java.util.Map;
+
 /**
  * TypeTemplateService 服务接口
  * @date 2018-10-31 21:11:54
@@ -32,4 +34,5 @@ public interface TypeTemplateService {
 	/** 多条件分页查询 */
 	PageResult findByPage(TypeTemplate typeTemplate, int page, int rows);
 
+	List<Map> findSpecByTemplateId(Long id);
 }

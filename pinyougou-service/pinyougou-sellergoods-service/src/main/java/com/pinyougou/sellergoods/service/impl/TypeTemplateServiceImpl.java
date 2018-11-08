@@ -1,11 +1,14 @@
 package com.pinyougou.sellergoods.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.ISelect;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pinyougou.common.pojo.PageResult;
+import com.pinyougou.mapper.SpecificationOptionMapper;
 import com.pinyougou.mapper.TypeTemplateMapper;
+import com.pinyougou.pojo.SpecificationOption;
 import com.pinyougou.pojo.TypeTemplate;
 import com.pinyougou.service.TypeTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service(interfaceName = "com.pinyougou.service.TypeTemplateService")
 @Transactional
@@ -22,6 +26,9 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
     @Autowired
     private TypeTemplateMapper typeTemplateMapper;
+
+    @Autowired
+    private SpecificationOptionMapper specificationOptionMapper;
     /**
      * 添加方法
      *
@@ -85,6 +92,23 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
     @Override
     public List<TypeTemplate> findAll() {
         return null;
+    }
+
+    @Override
+    public List<Map> findSpecByTemplateId(Long id) {
+        try{
+            TypeTemplate typeTemplate = findOne(id);
+            List<Map> specIds = JSON.parseArray(typeTemplate.getSpecIds(),Map.class);
+            for (Map specId: specIds) {
+                SpecificationOption specificationOption = new SpecificationOption();
+                specificationOption.setSpecId(Long.valueOf(specId.get("id").toString()));
+                List<SpecificationOption> options = specificationOptionMapper.select(specificationOption);
+                specId.put("options",options);
+            }
+            return specIds;
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
     }
 
     /**

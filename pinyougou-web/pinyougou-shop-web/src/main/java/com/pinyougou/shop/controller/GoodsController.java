@@ -15,6 +15,7 @@ public class GoodsController {
     @Reference(timeout = 10000)
     private GoodsService goodsService;
 
+
     @RequestMapping("/save")
     public boolean save(@RequestBody Goods goods){
         try {
