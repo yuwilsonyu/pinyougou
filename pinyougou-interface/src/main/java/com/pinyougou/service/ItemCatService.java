@@ -32,4 +32,6 @@ public interface ItemCatService {
 	List<ItemCat> findByPage(ItemCat itemCat, int page, int rows);
 
     List<ItemCat> findItemCatByParentId(Long parentId);
+
+
 }
