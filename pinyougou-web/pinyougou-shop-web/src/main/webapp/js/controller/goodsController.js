@@ -228,5 +228,19 @@ app.controller('goodsController', function ($scope, $controller, baseService) {
         return newItems;
     };
 
+    /** 定义搜索对象 */
+    $scope.searchEntity = {};
+    /** 分页查询 */
+    $scope.search = function(page, rows){
+        /** 调用服务层分页查询数据 */
+        baseService.findByPage("/goods/findByPage", page,
+            rows, $scope.searchEntity)
+            .then(function(response){
+                $scope.dataList = response.data.rows;
+                /** 更新总记录数 */
+                $scope.paginationConf.totalItems = response.data.total;
+            });
+    };
 
+    $scope.status = ['未审核','已审核','审核未通过','关闭'];
 });
