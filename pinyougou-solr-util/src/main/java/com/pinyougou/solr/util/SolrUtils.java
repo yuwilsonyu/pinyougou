@@ -23,6 +23,12 @@ public class SolrUtils {
     @Autowired
     private SolrTemplate solrTemplate;
 
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+        SolrUtils solrUtils = context.getBean(SolrUtils.class);
+        solrUtils.importItemData();
+
+    }
     /** 导入商品数据 */
     public void importItemData(){
         /** 创建Item对象封装查询条件 */
