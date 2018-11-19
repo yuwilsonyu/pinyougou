@@ -8,16 +8,16 @@ import com.github.pagehelper.PageInfo;
 import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.mapper.*;
 import com.pinyougou.pojo.Goods;
+import com.pinyougou.pojo.GoodsDesc;
 import com.pinyougou.pojo.Item;
 import com.pinyougou.pojo.ItemCat;
 import com.pinyougou.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service(interfaceName ="com.pinyougou.service.GoodsService" )
 @Transactional
@@ -149,10 +149,64 @@ public class GoodsServiceImpl implements GoodsService {
         return null;
     }
 
+    //根据商品id查找sku
+    @Override
+    public List<Item> findItemByGoodsId(Long[] ids) {
+        try{
+            Example example =  new Example(Item.class);
+            Example.Criteria criteria = example.createCriteria();
+            criteria.andIn("goodsId",Arrays.asList(ids));
+            return itemMapper.selectByExample(example);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateMarkerable(Long[] ids, String status) {
+        goodsMapper.updateStatus("is_marketable",ids, status);
+    }
+
+    //根据商品spu id查询商品
+    @Override
+    public Map<String, Object> getGoods(Long goodsId) {
+        try {
+            Map<String,Object> data = new HashMap<>();
+            Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+            data.put("goods",goods);
+            GoodsDesc goodsDesc = goodsDescMapper.selectByPrimaryKey(goodsId);
+            data.put("goodsDesc",goodsDesc);
+            if (goods != null && goods.getCategory3Id() != null){
+                String itemCat1 = itemCatMapper.selectByPrimaryKey(goods.getCategory1Id()).getName();
+                String itemCat2 = itemCatMapper.selectByPrimaryKey(goods.getCategory2Id()).getName();
+                String itemCat3 = itemCatMapper.selectByPrimaryKey(goods.getCategory3Id()).getName();
+                data.put("itemCat1",itemCat1);
+                data.put("itemCat2",itemCat2);
+                data.put("itemCat3",itemCat3);
+            }
+            /** 查询SKU数据 */
+            Example example = new Example(Item.class);
+            /** 查询条件对象 */
+            Example.Criteria criteria = example.createCriteria();
+            /** 状态码为：1 */
+            criteria.andEqualTo("status", "1");
+            /** 条件: SPU ID */
+            criteria.andEqualTo("goodsId", goodsId);
+            /** 按是否默认降序(保证第一个为默认) */
+            example.orderBy("isDefault").desc();
+            /** 根据条件查询SKU商品数据 */
+            List<Item> itemList = itemMapper.selectByExample(example);
+            data.put("itemList", JSON.toJSONString(itemList));
+            return data;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void updateStatus(Long[] ids, String status) {
         try {
-            goodsMapper.updateStatus(ids, status);
+            goodsMapper.updateStatus(null,ids, status);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

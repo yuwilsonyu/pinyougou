@@ -2,8 +2,12 @@ package com.pinyougou.service;
 
 import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.pojo.Goods;
+import com.pinyougou.pojo.Item;
+
 import java.util.List;
 import java.io.Serializable;
+import java.util.Map;
+
 /**
  * GoodsService 服务接口
  * @date 2018-10-31 21:11:53
@@ -33,4 +37,11 @@ public interface GoodsService {
 	PageResult findByPage(Goods goods, int page, int rows);
 
 	void updateStatus(Long[] ids, String status);
+
+	//根据商品spu id查询商品
+    Map<String,Object> getGoods(Long goodsId);
+
+    void updateMarkerable(Long[] ids, String status);
+
+    List<Item> findItemByGoodsId(Long[] ids);
 }

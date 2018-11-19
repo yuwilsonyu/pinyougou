@@ -28,7 +28,7 @@
 	</select>
 
 	<update id="updateStatus">
-		UPDATE tb_goods set audit_status = #{status} where id in
+		UPDATE tb_goods set ${cloumnName} = #{status} where id in
 		<foreach collection="ids" item="id" open="(" separator="," close=")">
 			#{id}
 		</foreach>

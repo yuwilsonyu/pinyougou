@@ -12,7 +12,7 @@
 
     <!-- 配置加载属性文件 -->
     <context:property-placeholder
-            location="classpath*:props/*.properties"/>
+            location="classpath*:props/*.properties" ignore-unresolvable="true"/>
 
     <!-- 配置数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"

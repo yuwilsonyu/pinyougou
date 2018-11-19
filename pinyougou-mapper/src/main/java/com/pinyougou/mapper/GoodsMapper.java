@@ -18,5 +18,5 @@ public interface GoodsMapper extends Mapper<Goods>{
 
     List<Map<String,Object>> findAll(Goods goods);
 
-    void updateStatus(@Param("ids") Long[] ids, @Param("status") String status);
+    void updateStatus(@Param("cloumnName") String cloumnName, @Param("ids") Long[] ids, @Param("status") String status);
 }

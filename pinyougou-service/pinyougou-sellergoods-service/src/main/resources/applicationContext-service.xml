@@ -10,7 +10,7 @@
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
     <!-- 配置加载属性文件 -->
-    <context:property-placeholder location="classpath:props/*.properties"/>
+    <context:property-placeholder location="classpath:props/*.properties" ignore-unresolvable="true"/>
     <!-- 导入数据访问的Spring配置文件 -->
     <import resource="classpath:applicationContext-mapper.xml"/>
 
