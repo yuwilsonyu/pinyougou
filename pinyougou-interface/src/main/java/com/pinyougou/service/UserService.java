@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public interface UserService {
 
-	/** 添加方法 */
+	/** 注册新用户方法 */
 	void save(User user);
 
 	/** 修改方法 */
@@ -31,4 +31,8 @@ public interface UserService {
 	/** 多条件分页查询 */
 	List<User> findByPage(User user, int page, int rows);
 
+	/** 验证用户验证码*/
+    boolean checkSmsCode(String phone, String smsCode);
+
+	boolean sendCode(String phone);
 }

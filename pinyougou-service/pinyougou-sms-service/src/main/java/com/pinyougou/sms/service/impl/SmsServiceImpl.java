@@ -1,5 +1,6 @@
 package com.pinyougou.sms.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
@@ -8,7 +9,10 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.pinyougou.service.SmsService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service(interfaceName = "com.pinyougou.service.SmsService" )
+@Transactional
 public class SmsServiceImpl implements SmsService {
 
     private static final String PRODUCT = "Dysmsapi";
@@ -20,6 +24,8 @@ public class SmsServiceImpl implements SmsService {
     // 签名密钥
     @Value("${sms.accessKeySecret}")
     private String accessKeySecret;
+
+
 
     /**
      * 发送短信方法
